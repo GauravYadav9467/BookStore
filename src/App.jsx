@@ -6,6 +6,7 @@ function App() {
   return (
     <>
     <div className="body">
+      {/* Navigation   */}
       <div className='nav flex place-content-around bg-gray-200 pt-8 items-center align-middle h-16'>
         <div className="sName text-4xl pl-5">
           <h2>BookStore</h2>
@@ -20,11 +21,13 @@ function App() {
           <button>Cart</button>
         </div>
       </div>
+      {/* Body Content */}
       <div className="content">
         <p>Welcome to the BookStore!</p>
       </div>
-      <div className="grid grid-cols-4 gap-9 bg-linear-to-b from-[#0f1f3b] to-[#0a1528] px-11.5 py-8.5 text-[#e9eefc] max-[980px]:grid-cols-2 max-[640px]:grid-cols-1 max-[640px]:p-6">
-        <div className="text-[#e9eefc]">
+      {/* Footer */}
+      <div className=" footer grid grid-cols-4 gap-9 bg-linear-to-b from-[#0f1f3b] to-[#0a1528] px-[44px] py-[34px] text-[#e9eefc] max-[980px]:grid-cols-2 max-[640px]:grid-cols-1 max-[640px]:p-6">
+        <div className="BookStore text-[#e9eefc]">
           <h3 className="mb-2.5 text-[26px] font-bold text-white">BookStore</h3>
           <p className="mb-3.5 max-w-70 text-sm leading-normal text-[#c6d2ec]">
             Your one-stop destination for all kinds of books. From fiction to
@@ -38,7 +41,7 @@ function App() {
           </div>
         </div>
 
-        <div className="text-[#e9eefc]">
+        <div className="QuickLinks text-[#e9eefc]">
           <h3 className="mb-3 text-[26px] font-bold text-white">Quick Links</h3>
           <ul className="m-0 list-none space-y-1.75 p-0">
             <li><a href="#" className="text-[15px] text-[#c6d2ec] no-underline transition-colors duration-200 hover:text-white">All Books</a></li>
@@ -48,7 +51,7 @@ function App() {
           </ul>
         </div>
 
-        <div className="text-[#e9eefc]">
+        <div className="costumerService text-[#e9eefc]">
           <h3 className="mb-3 text-[26px] font-bold text-white">Customer Service</h3>
           <ul className="m-0 list-none space-y-1.75 p-0">
             <li><a href="#" className="text-[15px] text-[#c6d2ec] no-underline transition-colors duration-200 hover:text-white">Help Center</a></li>
@@ -58,7 +61,7 @@ function App() {
           </ul>
         </div>
 
-        <div className="text-[#e9eefc]">
+        <div className="newsletter text-[#e9eefc]">
           <h3 className="mb-3 text-[26px] font-bold text-white">Newsletter</h3>
           <p className="mb-3.5 max-w-70 text-sm leading-normal text-[#c6d2ec]">
             Subscribe to get special offers and updates.
