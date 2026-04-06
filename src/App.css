@@ -1,18 +1,14 @@
-@import "tailwindcss";
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 .body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background:#e5e6ea;
 }
 
 .content {
     flex: 1;
     padding: 24px;
 }
+
+@import "tailwindcss";
