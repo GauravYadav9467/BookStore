@@ -19,6 +19,12 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String
   },
+  author: {
+    type: String
+  },
+  class: {
+    type: String
+  },
   stock: {
     type: Number,
     default: 0

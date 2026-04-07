@@ -56,13 +56,6 @@ const ProductDetail = () => {
     navigate('/checkout')
   }
 
-  const handleQuantityChange = (e) => {
-    const value = parseInt(e.target.value)
-    if (value > 0) {
-      setQuantity(value)
-    }
-  }
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -101,7 +94,8 @@ const ProductDetail = () => {
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-auto max-h-[500px] object-cover rounded-lg"
+              className="w-full h-auto max-h-125 object-cover rounded-lg"
+              loading="lazy"
             />
           </div>
 
@@ -158,15 +152,23 @@ const ProductDetail = () => {
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <label className="text-lg font-semibold text-gray-900">Quantity:</label>
-                <select
-                  value={quantity}
-                  onChange={handleQuantityChange}
-                  className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
-                    <option key={num} value={num}>{num}</option>
-                  ))}
-                </select>
+                <div className="flex items-center border border-gray-300 rounded-lg">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-4 py-2 text-xl font-bold text-gray-700 hover:bg-gray-100 transition"
+                  >
+                    −
+                  </button>
+                  <span className="px-4 py-2 text-lg font-semibold text-gray-900 min-w-[50px] text-center">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity(Math.min(10, quantity + 1))}
+                    className="px-4 py-2 text-xl font-bold text-gray-700 hover:bg-gray-100 transition"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
 
               {/* Success Message */}

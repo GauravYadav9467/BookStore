@@ -1,10 +1,17 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import Home from './pages/Home'
-import ProductDetail from './pages/ProductDetail'
-import Cart from './pages/Cart'
+const ProductDetail = lazy(() => import('./pages/ProductDetail'))
+const Cart = lazy(() => import('./pages/Cart'))
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <p className="text-xl text-gray-600">Loading...</p>
+  </div>
+)
 
 function App() {
   return (
@@ -13,8 +20,8 @@ function App() {
       <div className="body">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/checkout" element={<Cart />} />
+          <Route path="/product/:id" element={<Suspense fallback={<LoadingSpinner />}><ProductDetail /></Suspense>} />
+          <Route path="/checkout" element={<Suspense fallback={<LoadingSpinner />}><Cart /></Suspense>} />
         </Routes>
       </div>
       <Footer />

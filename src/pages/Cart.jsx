@@ -134,6 +134,7 @@ const Cart = () => {
                     src={item.image}
                     alt={item.name}
                     className="w-20 h-28 object-cover rounded-lg"
+                    loading="lazy"
                   />
                   <div className="flex-1">
                     <h3 className="font-bold text-lg text-gray-900">{item.name}</h3>
@@ -142,13 +143,23 @@ const Cart = () => {
                     <div className="flex items-center gap-4 mt-2">
                       <div className="flex items-center gap-2">
                         <label className="text-sm text-gray-600">Qty:</label>
-                        <input
-                          type="number"
-                          min="1"
-                          value={item.quantity}
-                          onChange={(e) => handleQuantityChange(item.productId, parseInt(e.target.value))}
-                          className="w-12 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <div className="flex items-center border border-gray-300 rounded-lg">
+                          <button
+                            onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
+                            className="px-2 py-1 text-lg font-bold text-gray-700 hover:bg-gray-100 transition"
+                          >
+                            −
+                          </button>
+                          <span className="px-3 py-1 text-sm font-semibold text-gray-900 min-w-[40px] text-center">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
+                            className="px-2 py-1 text-lg font-bold text-gray-700 hover:bg-gray-100 transition"
+                          >
+                            +
+                          </button>
+                        </div>
                       </div>
                       <p className="text-lg font-semibold text-gray-900">
                         Total: ₹{(item.price * item.quantity).toFixed(2)}
