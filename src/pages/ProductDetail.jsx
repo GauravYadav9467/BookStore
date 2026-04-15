@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 import { getProductById } from '../services/api'
 
 const ProductDetail = () => {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { token } = useAuth()
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -24,7 +26,7 @@ const ProductDetail = () => {
   }, [id])
 
   const handleAddToCart = () => {
-    if (product) {
+    if (product && product.stock > 0) {
       const cartItem = {
         productId: product._id || product.id,
         name: product.name,
@@ -51,9 +53,13 @@ const ProductDetail = () => {
   }
 
   const handleBuyNow = () => {
+    if (!token) {
+      navigate('/login')
+      return
+    }
     handleAddToCart()
-    // Navigate to checkout page
-    navigate('/checkout')
+    // Navigate to cart page
+    navigate('/cart')
   }
 
   if (loading) {
@@ -103,7 +109,9 @@ const ProductDetail = () => {
           <div className="flex flex-col justify-between">
             <div>
               <h1 className="text-4xl font-bold text-gray-900 mb-2">{product.name}</h1>
-              <p className="text-xl text-gray-600 mb-4">by {product.author}</p>
+              <p className="text-xl text-gray-600 mb-4">
+                {product.author ? `by ${product.author}` : product.publisher ? `by ${product.publisher}` : 'N/A'}
+              </p>
 
               {/* Rating */}
               <div className="flex items-center mb-4">
@@ -116,7 +124,9 @@ const ProductDetail = () => {
               {/* Price */}
               <div className="mb-6">
                 <p className="text-3xl font-bold text-gray-900">₹{product.price.toFixed(2)}</p>
-                <p className="text-lg text-green-600 font-semibold">In Stock</p>
+                <p className={`text-lg font-semibold ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                </p>
               </div>
 
               {/* Description */}
@@ -130,11 +140,11 @@ const ProductDetail = () => {
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-gray-600">Category</p>
-                    <p className="font-semibold text-gray-900">{product.category || 'Books'}</p>
+                    <p className="font-semibold text-gray-900">{(product.category && Array.isArray(product.category)) ? product.category.join(', ') : (product.category || 'Books')}</p>
                   </div>
                   <div>
-                    <p className="text-gray-600">Publisher</p>
-                    <p className="font-semibold text-gray-900">{product.publisher || 'N/A'}</p>
+                    <p className="text-gray-600">{product.author ? 'Author' : 'Publisher'}</p>
+                    <p className="font-semibold text-gray-900">{product.author || product.publisher || 'N/A'}</p>
                   </div>
                   <div>
                     <p className="text-gray-600">Language</p>
@@ -143,6 +153,10 @@ const ProductDetail = () => {
                   <div>
                     <p className="text-gray-600">Pages</p>
                     <p className="font-semibold text-gray-900">{product.pages || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600">Available stock</p>
+                    <p className="font-semibold text-gray-900">{product.stock > 0 ? `${product.stock} in stock` : 'Out of Stock'}</p>
                   </div>
                 </div>
               </div>
@@ -159,7 +173,7 @@ const ProductDetail = () => {
                   >
                     −
                   </button>
-                  <span className="px-4 py-2 text-lg font-semibold text-gray-900 min-w-[50px] text-center">
+                  <span className="px-4 py-2 text-lg font-semibold text-gray-900 min-w-12.5 text-center">
                     {quantity}
                   </span>
                   <button
@@ -182,7 +196,8 @@ const ProductDetail = () => {
               <div className="flex gap-4">
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 px-6 py-3 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-600 transition duration-200 flex items-center justify-center space-x-2"
+                  disabled={product.stock === 0}
+                  className={`flex-1 px-6 py-3 text-white font-bold rounded-lg transition duration-200 flex items-center justify-center space-x-2 ${product.stock > 0 ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-gray-400 cursor-not-allowed'}`}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -191,9 +206,10 @@ const ProductDetail = () => {
                 </button>
                 <button
                   onClick={handleBuyNow}
-                  className="flex-1 px-6 py-3 bg-orange-600 text-white font-bold rounded-lg hover:bg-orange-700 transition duration-200"
+                  disabled={product.stock === 0}
+                  className={`flex-1 px-6 py-3 text-white font-bold rounded-lg transition duration-200 ${product.stock > 0 ? 'bg-orange-600 hover:bg-orange-700' : 'bg-gray-400 cursor-not-allowed'}`}
                 >
-                  Buy Now
+                  {product.stock > 0 ? 'Buy Now' : 'Out of Stock'}
                 </button>
               </div>
 

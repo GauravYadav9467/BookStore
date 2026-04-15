@@ -5,15 +5,6 @@ const Cart = () => {
   const navigate = useNavigate()
   const [cartItems, setCartItems] = useState([])
   const [orderTotal, setOrderTotal] = useState(0)
-  const [customerInfo, setCustomerInfo] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    pincode: ''
-  })
-  const [orderPlaced, setOrderPlaced] = useState(false)
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart')) || []
@@ -47,56 +38,7 @@ const Cart = () => {
     calculateTotal(updatedCart)
   }
 
-  const handleCustomerInfoChange = (e) => {
-    const { name, value } = e.target
-    setCustomerInfo(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
-
-  const handlePlaceOrder = (e) => {
-    e.preventDefault()
-
-    if (!customerInfo.name || !customerInfo.email || !customerInfo.phone || !customerInfo.address) {
-      alert('Please fill all required fields')
-      return
-    }
-
-    // Here you would typically send the order to your backend
-    console.log('Order placed:', {
-      items: cartItems,
-      customerInfo,
-      total: orderTotal
-    })
-
-    setOrderPlaced(true)
-    localStorage.removeItem('cart')
-  }
-
-  if (orderPlaced) {
-    return (
-      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
-          <div className="text-6xl text-green-500 mb-4">✓</div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Order Placed Successfully!</h1>
-          <p className="text-gray-600 mb-4">Thank you for your order. We'll deliver it soon.</p>
-          <p className="text-gray-700 font-semibold mb-6">Order Total: ₹{orderTotal.toFixed(2)}</p>
-          <button
-            onClick={() => {
-              setOrderPlaced(false)
-              navigate('/')
-            }}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-          >
-            Continue Shopping
-          </button>
-        </div>
-      </div>
-    )
-  }
-
-  if (cartItems.length === 0 && !orderPlaced) {
+  if (cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
@@ -150,7 +92,7 @@ const Cart = () => {
                           >
                             −
                           </button>
-                          <span className="px-3 py-1 text-sm font-semibold text-gray-900 min-w-[40px] text-center">
+                          <span className="px-3 py-1 text-sm font-semibold text-gray-900 min-w-10 text-center">
                             {item.quantity}
                           </span>
                           <button
@@ -178,7 +120,7 @@ const Cart = () => {
             </div>
           </div>
 
-          {/* Order Summary & Checkout */}
+          {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-lg p-6 sticky top-4">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
@@ -203,86 +145,12 @@ const Cart = () => {
                 <span>₹{(orderTotal * 1.05).toFixed(2)}</span>
               </div>
 
-              {/* Customer Info Form */}
-              <form onSubmit={handlePlaceOrder} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-1">Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={customerInfo.name}
-                    onChange={handleCustomerInfoChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-1">Email *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={customerInfo.email}
-                    onChange={handleCustomerInfoChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-1">Phone *</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={customerInfo.phone}
-                    onChange={handleCustomerInfoChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-1">Address *</label>
-                  <textarea
-                    name="address"
-                    value={customerInfo.address}
-                    onChange={handleCustomerInfoChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    rows="3"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-1">City</label>
-                    <input
-                      type="text"
-                      name="city"
-                      value={customerInfo.city}
-                      onChange={handleCustomerInfoChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-900 mb-1">Pincode</label>
-                    <input
-                      type="text"
-                      name="pincode"
-                      value={customerInfo.pincode}
-                      onChange={handleCustomerInfoChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full px-4 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition duration-200 mt-6"
-                >
-                  Place Order
-                </button>
-              </form>
+              <button
+                onClick={() => navigate('/checkout')}
+                className="w-full px-4 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition duration-200"
+              >
+                Proceed to Checkout
+              </button>
             </div>
           </div>
         </div>
