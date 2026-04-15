@@ -13,6 +13,7 @@ import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
 import Orders from './pages/Orders'
 import Profile from './pages/Profile'
+import SearchResults from './pages/SearchResults'
 const ProductDetail = lazy(() => import('./pages/ProductDetail'))
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -78,6 +79,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<Suspense fallback={<LoadingSpinner />}><ProductDetail /></Suspense>} />
+            <Route path="/search" element={<SearchResults />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/seller/register" element={<SellerRegister />} />

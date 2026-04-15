@@ -85,16 +85,16 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-4 md:py-8 px-3 md:px-4 sm:px-6 lg:px-8">
       <button
         onClick={() => navigate('/')}
-        className="mb-6 px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition"
+        className="mb-4 md:mb-6 px-3 md:px-4 py-2 bg-gray-400 text-white text-sm md:text-base rounded-lg hover:bg-gray-500 transition"
       >
         ← Back to Products
       </button>
 
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 p-4 md:p-8">
           {/* Product Image */}
           <div className="flex items-center justify-center bg-gray-100 rounded-lg">
             <img
@@ -108,43 +108,43 @@ const ProductDetail = () => {
           {/* Product Details */}
           <div className="flex flex-col justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">{product.name}</h1>
-              <p className="text-xl text-gray-600 mb-4">
+              <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2">{product.name}</h1>
+              <p className="text-lg md:text-xl text-gray-600 mb-4 break-words">
                 {product.author ? `by ${product.author}` : product.publisher ? `by ${product.publisher}` : 'N/A'}
               </p>
 
               {/* Rating */}
               <div className="flex items-center mb-4">
-                <div className="flex text-yellow-400">
+                <div className="flex text-yellow-400 text-sm md:text-base">
                   {'★'.repeat(5)}
                 </div>
-                <span className="ml-2 text-gray-600">(250+ reviews)</span>
+                <span className="ml-2 text-gray-600 text-sm md:text-base">(250+ reviews)</span>
               </div>
 
               {/* Price */}
               <div className="mb-6">
-                <p className="text-3xl font-bold text-gray-900">₹{product.price.toFixed(2)}</p>
-                <p className={`text-lg font-semibold ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                <p className="text-2xl md:text-3xl font-bold text-gray-900">₹{product.price.toFixed(2)}</p>
+                <p className={`text-base md:text-lg font-semibold ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
                 </p>
               </div>
 
               {/* Description */}
               <div className="mb-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Description</h3>
-                <p className="text-gray-600 leading-relaxed">{product.description}</p>
+                <h3 className="text-base md:text-lg font-bold text-gray-900 mb-2">Description</h3>
+                <p className="text-gray-600 leading-relaxed text-sm md:text-base">{product.description}</p>
               </div>
 
               {/* Additional Details */}
               <div className="mb-6 border-t pt-4">
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 text-xs md:text-sm">
                   <div>
                     <p className="text-gray-600">Category</p>
-                    <p className="font-semibold text-gray-900">{(product.category && Array.isArray(product.category)) ? product.category.join(', ') : (product.category || 'Books')}</p>
+                    <p className="font-semibold text-gray-900 break-words">{(product.category && Array.isArray(product.category)) ? product.category.join(', ') : (product.category || 'Books')}</p>
                   </div>
                   <div>
                     <p className="text-gray-600">{product.author ? 'Author' : 'Publisher'}</p>
-                    <p className="font-semibold text-gray-900">{product.author || product.publisher || 'N/A'}</p>
+                    <p className="font-semibold text-gray-900 break-words">{product.author || product.publisher || 'N/A'}</p>
                   </div>
                   <div>
                     <p className="text-gray-600">Language</p>
@@ -164,21 +164,21 @@ const ProductDetail = () => {
 
             {/* Quantity and Action Buttons */}
             <div className="space-y-4">
-              <div className="flex items-center space-x-4">
-                <label className="text-lg font-semibold text-gray-900">Quantity:</label>
+              <div className="flex items-center space-x-2 md:space-x-4 flex-wrap">
+                <label className="text-base md:text-lg font-semibold text-gray-900">Quantity:</label>
                 <div className="flex items-center border border-gray-300 rounded-lg">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-4 py-2 text-xl font-bold text-gray-700 hover:bg-gray-100 transition"
+                    className="px-3 md:px-4 py-2 text-lg md:text-xl font-bold text-gray-700 hover:bg-gray-100 transition"
                   >
                     −
                   </button>
-                  <span className="px-4 py-2 text-lg font-semibold text-gray-900 min-w-12.5 text-center">
+                  <span className="px-3 md:px-4 py-2 text-base md:text-lg font-semibold text-gray-900 min-w-12.5 text-center">
                     {quantity}
                   </span>
                   <button
                     onClick={() => setQuantity(Math.min(10, quantity + 1))}
-                    className="px-4 py-2 text-xl font-bold text-gray-700 hover:bg-gray-100 transition"
+                    className="px-3 md:px-4 py-2 text-lg md:text-xl font-bold text-gray-700 hover:bg-gray-100 transition"
                   >
                     +
                   </button>
@@ -187,19 +187,19 @@ const ProductDetail = () => {
 
               {/* Success Message */}
               {addedToCart && (
-                <div className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                <div className="p-3 md:p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg text-sm md:text-base">
                   ✓ Added to cart successfully!
                 </div>
               )}
 
               {/* Action Buttons */}
-              <div className="flex gap-4">
+              <div className="flex gap-2 md:gap-4 flex-col sm:flex-row">
                 <button
                   onClick={handleAddToCart}
                   disabled={product.stock === 0}
-                  className={`flex-1 px-6 py-3 text-white font-bold rounded-lg transition duration-200 flex items-center justify-center space-x-2 ${product.stock > 0 ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-gray-400 cursor-not-allowed'}`}
+                  className={`flex-1 px-4 md:px-6 py-2 md:py-3 text-white font-bold rounded-lg transition duration-200 flex items-center justify-center space-x-2 text-sm md:text-base ${product.stock > 0 ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-gray-400 cursor-not-allowed'}`}
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                   <span>Add to Cart</span>
@@ -207,15 +207,15 @@ const ProductDetail = () => {
                 <button
                   onClick={handleBuyNow}
                   disabled={product.stock === 0}
-                  className={`flex-1 px-6 py-3 text-white font-bold rounded-lg transition duration-200 ${product.stock > 0 ? 'bg-orange-600 hover:bg-orange-700' : 'bg-gray-400 cursor-not-allowed'}`}
+                  className={`flex-1 px-4 md:px-6 py-2 md:py-3 text-white font-bold rounded-lg transition duration-200 text-sm md:text-base ${product.stock > 0 ? 'bg-orange-600 hover:bg-orange-700' : 'bg-gray-400 cursor-not-allowed'}`}
                 >
                   {product.stock > 0 ? 'Buy Now' : 'Out of Stock'}
                 </button>
               </div>
 
               {/* Delivery Info */}
-              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <p className="text-sm text-gray-700">
+              <div className="p-3 md:p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <p className="text-xs md:text-sm text-gray-700">
                   <svg className="w-4 h-4 inline mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                   </svg>

@@ -173,28 +173,28 @@ export default function SellerDashboard() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-6xl mx-auto p-3 md:p-6">
       {/* Header */}
-      <div className="flex justify-between items-center mb-8 pb-4 border-b-2 border-gray-200">
-        <h1 className="text-4xl font-bold text-gray-900">Product Management</h1>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 md:mb-8 pb-4 border-b-2 border-gray-200 gap-3 sm:gap-0">
+        <h1 className="text-2xl md:text-4xl font-bold text-gray-900">Product Management</h1>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition duration-200"
+          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 md:px-6 rounded-lg transition duration-200 text-sm md:text-base w-full sm:w-auto"
         >
           {showForm ? '✕ Cancel' : '+ Add New Product'}
         </button>
       </div>
 
       {error && (
-        <div className="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 rounded">
+        <div className="mb-4 p-4 bg-red-100 border-l-4 border-red-500 text-red-700 rounded text-sm md:text-base">
           {error}
         </div>
       )}
 
       {/* Add/Edit Form */}
       {showForm && (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8 shadow-md">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 md:p-6 mb-8 shadow-md">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-6">
             {editingId ? 'Edit Product' : 'Add New Product'}
           </h2>
 
@@ -358,12 +358,12 @@ export default function SellerDashboard() {
 
       {/* Products List */}
       <div>
-        {loading && !showForm && <p className="text-center text-gray-600 py-8">Loading products...</p>}
+        {loading && !showForm && <p className="text-center text-gray-600 py-6 md:py-8 text-sm md:text-base">Loading products...</p>}
         {products.length === 0 && !showForm && (
-          <p className="text-center text-gray-600 py-8">No products yet. Add your first product!</p>
+          <p className="text-center text-gray-600 py-6 md:py-8 text-sm md:text-base">No products yet. Add your first product!</p>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {products.map(product => (
             <div
               key={product._id}
@@ -374,37 +374,37 @@ export default function SellerDashboard() {
                 alt={product.name}
                 className="w-full h-48 object-cover"
               />
-              <div className="p-4">
-                <h3 className="text-lg font-bold text-gray-900">{product.name}</h3>
-                <p className="text-sm text-gray-600 mb-2">
+              <div className="p-3 md:p-4">
+                <h3 className="text-base md:text-lg font-bold text-gray-900 line-clamp-1">{product.name}</h3>
+                <p className="text-xs md:text-sm text-gray-600 mb-2 line-clamp-1">
                   {product.author ? `Author: ${product.author}` : product.publisher ? `Publisher: ${product.publisher}` : 'N/A'}
                 </p>
 
-                <div className="flex justify-between items-center mb-3">
-                  <span className="text-lg font-bold text-green-600">₹{product.price}</span>
-                  <span className="text-sm text-gray-600">Stock: {product.stock}</span>
+                <div className="flex justify-between items-center mb-3 gap-2 text-xs md:text-sm">
+                  <span className="text-base md:text-lg font-bold text-green-600">₹{product.price}</span>
+                  <span className="text-xs md:text-sm text-gray-600">Stock: {product.stock}</span>
                 </div>
 
                 {product.category && product.category.length > 0 && (
                   <div className="flex flex-wrap gap-1 mb-3">
                     {product.category.map(cat => (
-                      <span key={cat} className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                      <span key={cat} className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded">
                         {cat}
                       </span>
                     ))}
                   </div>
                 )}
 
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-col sm:flex-row">
                   <button
                     onClick={() => handleEdit(product)}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-200"
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1.5 md:py-2 text-sm rounded-lg transition duration-200"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(product._id)}
-                    className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition duration-200"
+                    className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-1.5 md:py-2 text-sm rounded-lg transition duration-200"
                   >
                     Delete
                   </button>
